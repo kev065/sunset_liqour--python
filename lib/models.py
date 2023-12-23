@@ -29,6 +29,8 @@ def customer_input():
         click.echo(click.style("Sorry, we cannot process your order.", fg='red'))
         click.echo(click.style("Alcohol is for persons above the age of 18.", fg='red'))
 
+    main_menu()    
+
 
 
 @click.command()
@@ -45,6 +47,8 @@ def brand_input():
     session.commit()
 
     click.echo(click.style(f"Brand '{brand_name}' has been added to the database.", fg='green'))
+
+    main_menu()
 
 
 
@@ -63,6 +67,8 @@ def company_input():
 
     click.echo(click.style(f"Company '{company_name}' has been added to the database.", fg='green'))
 
+    main_menu()
+
 @click.command()
 def add_comment():
     brand_id = click.prompt(click.style("Brand ID", fg='blue'), type=int)
@@ -72,6 +78,8 @@ def add_comment():
     session.add(new_comment)
     session.commit()
     click.echo(click.style(f"Your comment has been added.", fg='green'))
+
+    main_menu()
 
 
 @click.command()
@@ -84,17 +92,22 @@ def add_rating():
     session.commit()
     click.echo(click.style(f"Your rating has been added.", fg='green'))
 
+    main_menu()
+
 @click.command()
 def view_drinks():
     brands = session.query(Brand).all()
     for brand in brands:
         click.echo(click.style(f"{brand.name} - ${brand.price}", fg='green'))
 
+    main_menu()
+
 @click.command()
 
 def search_brands():
     search_term = click.prompt(click.style("Enter a search term", fg='blue'), type=str)
     matching_brands = session.query(Brand).filter(Brand.name.contains(search_term)).all()
+
 def search_all():
     search_term = click.prompt(click.style("Enter a search term", fg='blue'), type=str)
     matching_customers = session.query(Customer).filter(Customer.name.contains(search_term)).all()
@@ -111,6 +124,8 @@ def search_all():
     for brand in matching_brands:
         price = Decimal(brand.price) 
         click.echo(click.style(f"Brand: {brand.name}, Price: {price}, Category: {brand.category}", fg='green'))
+
+    main_menu()
 
 
 @click.command()
@@ -161,6 +176,7 @@ def main_menu():
 
 if __name__ == '__main__':
     main_menu()
+
 
 
    
